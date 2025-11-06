@@ -5,6 +5,8 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)]()
+![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)
+![Stars](https://img.shields.io/github/stars/Yigtwxx/CANomaly-LSTM)
 <br><br>
 <img width="500" height="656" alt="image" src="https://github.com/user-attachments/assets/ca972794-0f3c-4624-b53e-7d77cb0cbfbe" />
 
@@ -124,6 +126,7 @@ F1-Score: 0.7442
 🌐 GitHub: https://github.com/Yigtwxx
 
 
+🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
 ⭐ If you find this project useful, feel free to star the repository.
 
  ```
