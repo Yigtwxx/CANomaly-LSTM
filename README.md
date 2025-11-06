@@ -129,5 +129,3 @@ F1-Score: 0.7442
 🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
 
 ⭐ If you find this project useful, feel free to star the repository.
-
- ```
