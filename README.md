@@ -1,164 +1,137 @@
-# CANomaly-LSTM  
-**LSTM Autoencoder–based Anomaly Detection System for Automotive CAN-Bus Networks**
+# 🚗 CANomaly-LSTM  
+### LSTM Autoencoder–Based Anomaly Detection for CAN-Bus Traffic
 
-This project implements an end-to-end anomaly detection pipeline for automotive CAN-Bus traffic using an LSTM Autoencoder. The system generates fully synthetic CAN data, injects multiple attack scenarios, extracts sequential features, trains on normal-only traffic, and detects anomalies through reconstruction-error scoring.  
-It demonstrates a practical Intrusion Detection System (IDS) design combining time-series modeling, feature engineering, and deep learning.
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)]()
 
----
+<br><br>
 
-## 🚀 Key Features
+<img width="500" height="656" alt="image" src="https://github.com/user-attachments/assets/ca972794-0f3c-4624-b53e-7d77cb0cbfbe" />
 
-- **Fully synthetic CAN-Bus dataset generation**
-  - 20,000+ normal messages
-  - Realistic timestamp progression and byte-level payload structure
-- **Four attack scenarios**
-  - **Spoofing** (fake messages with abnormal byte patterns)  
-  - **Replay** (high-frequency re-transmission of previous messages)  
-  - **Unauthorized ID** (messages from unknown CAN identifiers)  
-  - **Payload Corruption** (bit-level inversion & data tampering)
-- **Feature engineering**
-  - One-hot encoded CAN IDs  
-  - 8-byte payload vectors  
-  - Inter-Arrival Time (IAT)
-- **Sliding-window sequence generation**  
-  - Window size: 50  
-  - Stride: 5  
-- **Deep learning model**
-  - LSTM Encoder → Latent Vector → LSTM Decoder  
-  - Trained only on **normal** traffic  
-  - Reconstruction MSE used as anomaly score
-- **Automatic threshold selection**
-  - Scans 200 candidate thresholds  
-  - Picks the one that maximizes **F1-score**
-- **Evaluation & Visualization**
-  - Confusion Matrix (Seaborn heatmap)
-  - Classification Report (precision, recall, F1)
-  - Reconstruction error CSV output
+
+<br>
+
+**Confusion Matrix — Threshold: 0.665126**  
+📄 Metrics summary can be found in `outputs/confusion_report.txt`
+
+</div>
 
 ---
 
-## 📁 Project Structure
+## ✅ Overview
 
-CANomaly-LSTM/
-├── data/
-│ ├── can_data.csv # Synthetic CAN-Bus dataset
-│ └── recon_errors.csv # Reconstruction errors + window labels
-│
-├── src/
-│ ├── generate_can_dataset.py # Synthetic traffic & attack generator
-│ ├── train_lstm_ae.py # LSTM Autoencoder training + error export
-│ └── plot_confusion.py # Confusion Matrix + Classification Report
-│
-├── outputs/
-│ ├── confusion_matrix.png # Heatmap visualization
-│ └── confusion_report.txt # Detailed model performance report
-│
-├── requirements.txt
-├── LICENSE
-└── README.md
+CANomaly-LSTM is a compact, end-to-end anomaly detection pipeline for **automotive CAN-Bus networks**.  
+It generates synthetic CAN traffic, injects realistic attack patterns, trains an LSTM Autoencoder on normal sequences, and detects anomalies using **reconstruction error + optimized thresholding**.
+
+Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir yapıda birleştirir.
+
+---
+
+## ✅ Features
+
+- Synthetic CAN dataset generation (timestamped frames, payload bytes, labels)  
+- 4 attack types:
+  - Spoofing  
+  - Replay  
+  - Unauthorized ID  
+  - Payload Corruption  
+- One-hot CAN ID encoding  
+- Payload (b0…b7) + Inter-Arrival Time (IAT)  
+- Sliding windows (size 50, stride 5)  
+- LSTM Autoencoder (Encoder → Latent → Decoder)  
+- Automatic threshold selection (best F1-score)  
+- Confusion matrix, classification report, and error CSV export  
+
+---
+
+## ✅ Project Structure
+src/
+├── generate_can_dataset.py # Synthetic CAN data + attacks
+├── train_lstm_ae.py # LSTM Autoencoder training
+└── plot_confusion.py # Evaluation scripts
+
+data/
+├── can_data.csv
+└── recon_errors.csv
+
+outputs/
+├── confusion_matrix.png
+└── confusion_report.txt
+
+requirements.txt
+LICENSE
+README.md
+
+---
+
+## ✅ How It Works (Short)
+
+1. **Dataset Generator**  
+   Creates 20k+ normal frames and injects 4 types of anomalies  
+   → stored in `data/can_data.csv`  
+   (script: `generate_can_dataset.py`)
+
+2. **Training (LSTM Autoencoder)**  
+   Model learns **normal-only** sequences  
+   → reconstruction error = anomaly score  
+   → results saved to `data/recon_errors.csv`  
+   (script: `train_lstm_ae.py`)
+
+3. **Evaluation**  
+   - Finds best F1 threshold automatically  
+   - Generates confusion matrix  
+   - Saves metrics report  
+   (script: `plot_confusion.py`)
 
 ---
 
 ## ✅ Installation
 
-Clone the repository:
-
 ```bash
-git clone https://github.com/<your-username>/CANomaly-LSTM
-cd CANomaly-LSTM
-
 pip install -r requirements.txt
 
-📊 Usage
-1. Generate Synthetic CAN-Bus Data
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.1
+matplotlib==3.8.3
+seaborn==0.13.2
+torch==2.2.0
+
+✅ Usage
+1. Generate Dataset
 python src/generate_can_dataset.py
 
-
-Outputs:
-data/can_data.csv
-
-2. Train the LSTM Autoencoder
+2. Train the Autoencoder
 python src/train_lstm_ae.py
 
-
-Outputs:
-
-data/recon_errors.csv
-
-console summary of selected threshold + F1-score
-
-3. Produce Confusion Matrix & Report
+3. Create Confusion Matrix & Report
 python src/plot_confusion.py
 
+✅ Example Outputs
+Confusion Matrix
 
-Outputs:
-
-outputs/confusion_matrix.png
-
-outputs/confusion_report.txt
-
-📈 Example Results
-
-Confusion Matrix (example):
-
-	      Pred 0	Pred 1
-True 0	3931	  3
-True 1	41	    64
-
-Accuracy: 98.9%
-
-Normal detection: extremely high (low false positives)
-
-Anomaly recall: moderate, typical for AE-based IDS
-
-Automatic threshold: selects the best value for F1 optimization
-
-The system achieves near-perfect normal traffic reconstruction and detects injected attacks with strong performance.
-
-🧠 Model Architecture
-Input Window (50 × F)
-     ↓
-LSTM Encoder
-     ↓
-Latent Vector (bottleneck)
-     ↓
-LSTM Decoder
-     ↓
-Reconstructed Window
-     ↓
-MSE Reconstruction Error → Anomaly Score
+<img width="450" height="450" alt="image" src="https://github.com/user-attachments/assets/4d02053e-426e-4a1c-9cc8-d52f91701f4c" />
 
 
-The Autoencoder is trained only on normal windows, enabling it to detect deviations in unseen attack sequences.
+Classification Report Summary
 
-📌 Why This Project Matters
+(Generated automatically in outputs/confusion_report.txt)
 
-Modern vehicles heavily depend on CAN-Bus, yet it lacks built-in security.
+Accuracy: 0.9891
+Precision (Anomaly): 0.9552
+Recall (Anomaly): 0.6095
+F1-Score: 0.7442
 
-Attackers can inject, replay, or manipulate messages with minimal effort.
+✅ Contact
 
-Deep-learning-based IDS systems are emerging as the next-generation defense layer.
+📧 Email: yigiterdogan6@icloud.com
 
-This project demonstrates a practical, reproducible, fully synthetic yet realistic IDS pipeline suitable for:
+🌐 GitHub: https://github.com/Yigtwxx
 
-Research
+<div align="center">
 
-Education
+⭐ If you find this project useful, feel free to star the repository.
 
-Automotive cybersecurity demonstrations
-
-Portfolio / hiring showcase
-
-📜 License
-
-MIT License — free for personal and commercial use.
-
-⭐ Contributing
-
-Pull requests are welcome. Feel free to open issues for feature suggestions or improvements.
-
-💬 Contact
-
-For questions or collaboration: <yigiterdogan6@icloud.com>
-
-If you like the project, consider starring ⭐ the repository!
+</div> ```
