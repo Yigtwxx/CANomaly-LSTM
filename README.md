@@ -5,9 +5,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)]()
-
 <br><br>
-
 <img width="500" height="656" alt="image" src="https://github.com/user-attachments/assets/ca972794-0f3c-4624-b53e-7d77cb0cbfbe" />
 
 
@@ -108,12 +106,6 @@ python src/train_lstm_ae.py
 
 3. Create Confusion Matrix & Report
 python src/plot_confusion.py
-
-✅ Example Outputs
-Confusion Matrix
-
-<img width="450" height="450" alt="image" src="https://github.com/user-attachments/assets/4d02053e-426e-4a1c-9cc8-d52f91701f4c" />
-
 
 Classification Report Summary
 
