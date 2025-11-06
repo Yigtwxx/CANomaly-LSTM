@@ -45,22 +45,24 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 ---
 
 ## ✅ Project Structure
-src/
-├── generate_can_dataset.py # Synthetic CAN data + attacks
-├── train_lstm_ae.py # LSTM Autoencoder training
-└── plot_confusion.py # Evaluation scripts
+CANomaly-LSTM/
+├── src/
+│   ├── generate_can_dataset.py      # Synthetic CAN data + attack injection
+│   ├── train_lstm_ae.py             # LSTM Autoencoder training pipeline
+│   └── plot_confusion.py            # Evaluation + confusion matrix generation
+│
+├── data/
+│   ├── can_data.csv                 # Generated CAN-Bus dataset
+│   └── recon_errors.csv             # Reconstruction errors + window labels
+│
+├── outputs/
+│   ├── confusion_matrix.png         # Seaborn heatmap
+│   └── confusion_report.txt         # Precision/Recall/F1 metrics
+│
+├── requirements.txt
+├── LICENSE
+└── README.md
 
-data/
-├── can_data.csv
-└── recon_errors.csv
-
-outputs/
-├── confusion_matrix.png
-└── confusion_report.txt
-
-requirements.txt
-LICENSE
-README.md
 
 ---
 
@@ -122,8 +124,7 @@ F1-Score: 0.7442
 
 🌐 GitHub: https://github.com/Yigtwxx
 
-<div align="center">
 
 ⭐ If you find this project useful, feel free to star the repository.
 
-</div> ```
+ ```
