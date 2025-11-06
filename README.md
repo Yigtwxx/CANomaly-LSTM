@@ -43,7 +43,7 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 - Confusion matrix, classification report, and error CSV export  
 
 ---
-
+```bash 
 ## ✅ Project Structure
 CANomaly-LSTM/
 ├── src/
@@ -62,8 +62,7 @@ CANomaly-LSTM/
 ├── requirements.txt
 ├── LICENSE
 └── README.md
-
-
+``` 
 ---
 
 ## ✅ How It Works (Short)
@@ -110,7 +109,6 @@ python src/train_lstm_ae.py
 python src/plot_confusion.py
 
 Classification Report Summary
-
 (Generated automatically in outputs/confusion_report.txt)
 
 Accuracy: 0.9891
@@ -118,6 +116,7 @@ Precision (Anomaly): 0.9552
 Recall (Anomaly): 0.6095
 F1-Score: 0.7442
 
+```
 ✅ Contact
 
 📧 Email: yigiterdogan6@icloud.com
