@@ -20,7 +20,7 @@
 
 ---
 
-## ✅ Overview
+## ✨ Overview
 
 CANomaly-LSTM is a compact, end-to-end anomaly detection pipeline for **automotive CAN-Bus networks**.  
 It generates synthetic CAN traffic, injects realistic attack patterns, trains an LSTM Autoencoder on normal sequences, and detects anomalies using **reconstruction error + optimized thresholding**.
@@ -29,7 +29,7 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 
 ---
 
-## ✅ Features
+## 💡 Features
 
 - Synthetic CAN dataset generation (timestamped frames, payload bytes, labels)  
 - 4 attack types:
@@ -46,7 +46,7 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 
 ---
 ```bash 
-## ✅ Project Structure
+## 📁 Project Structure
 CANomaly-LSTM/
 ├── src/
 │   ├── generate_can_dataset.py      # Synthetic CAN data + attack injection
@@ -67,7 +67,7 @@ CANomaly-LSTM/
 ``` 
 ---
 
-## ✅ How It Works (Short)
+## 🚀 How It Works (Short)
 
 1. **Dataset Generator**  
    Creates 20k+ normal frames and injects 4 types of anomalies  
@@ -119,7 +119,7 @@ Recall (Anomaly): 0.6095
 F1-Score: 0.7442
 
 ```
-✅ Contact
+💬 Contact
 
 📧 Email: yigiterdogan6@icloud.com
 
