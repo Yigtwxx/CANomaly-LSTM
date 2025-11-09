@@ -42,7 +42,20 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 - Sliding windows (size 50, stride 5)  
 - LSTM Autoencoder (Encoder → Latent → Decoder)  
 - Automatic threshold selection (best F1-score)  
-- Confusion matrix, classification report, and error CSV export  
+- Confusion matrix, classification report, and error CSV export
+
+🧪 Synthetic Data Generation
+
+The project includes a fully controllable synthetic CAN-Bus data generator, enabling experimentation without hardware.
+
+Supports:
+✅ Normal traffic
+✅ ID spoofing
+✅ Payload fuzzing
+✅ DoS-style high-frequency bursts
+✅ Gear / RPM manipulation
+
+This allows the model to learn robust patterns and detect multiple attack scenarios.
 
 ---
 ```bash 
