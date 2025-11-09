@@ -1,0 +1,12 @@
+Linear Regression Report
+----------------------------
+X (bağımsız): timestamp
+Y (bağımlı):  can_id
+Eşitlik:      y = 0.0001 * x + -230285215.2916
+R²:           0.000039
+RMSE:         615.444766
+Pearson r:    0.006205
+p-değeri:     0.377385
+Satır sayısı: 20240
+Görsel:       outputs\regression_plot.png
+Tahmin CSV:   outputs\regression_predictions.csv
