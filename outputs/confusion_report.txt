@@ -1,0 +1,14 @@
+Eşik değeri: 0.665126 (otomatik, en iyi F1=0.7442)
+
+Confusion Matrix:
+[[3931    3]
+ [  41   64]]
+
+              precision    recall  f1-score   support
+
+           0     0.9897    0.9992    0.9944      3934
+           1     0.9552    0.6095    0.7442       105
+
+    accuracy                         0.9891      4039
+   macro avg     0.9725    0.8044    0.8693      4039
+weighted avg     0.9888    0.9891    0.9879      4039
