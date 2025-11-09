@@ -46,16 +46,21 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 
 ## 🧪 Synthetic Data Generation
 
-The project includes a fully controllable synthetic CAN-Bus data generator, enabling experimentation without hardware.
+A configurable synthetic CAN-Bus data generator is included to enable safe, repeatable experimentation without physical hardware.  
+The generator produces labeled CAN frames and common attack scenarios so the model can learn robust normal/attack patterns.
 
-Supports:
-✅ Normal traffic
-✅ ID spoofing
-✅ Payload fuzzing
-✅ DoS-style high-frequency bursts
-✅ Gear / RPM manipulation
+### Key features
+- ✅ Normal traffic (multi-ECU simulation, configurable message schedules)  
+- ✅ ID spoofing (single or distributed spoofers)  
+- ✅ Payload fuzzing (byte-level randomization, bit-flip noise)  
+- ✅ DoS-style bursts (high-frequency message floods)  
+- ✅ Gear / RPM manipulation (continuous or step changes to simulate drivetrain spoofing)  
+- ✅ Fully reproducible via a random seed and configurable scenario parameters
 
-This allows the model to learn robust patterns and detect multiple attack scenarios.
+### Why use it
+- Create large, balanced datasets for training and evaluation without risking real vehicles.  
+- Reproduce specific attack scenarios for ablation studies and defense benchmarking.  
+- Control severity, frequency and overlap of attacks for robustness testing.
 
 ---
 ```bash 
