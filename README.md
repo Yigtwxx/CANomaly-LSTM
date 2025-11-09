@@ -44,7 +44,7 @@ Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir y
 - Automatic threshold selection (best F1-score)  
 - Confusion matrix, classification report, and error CSV export
 
-🧪 Synthetic Data Generation
+## 🧪 Synthetic Data Generation
 
 The project includes a fully controllable synthetic CAN-Bus data generator, enabling experimentation without hardware.
 
