@@ -1,148 +1,167 @@
-# 🚗 CANomaly-LSTM  
-### LSTM Autoencoder–Based Anomaly Detection for CAN-Bus Traffic
+# 🚗 CANomaly-LSTM
+### LSTM Autoencoder–Based Anomaly Detection for automotive CAN-Bus
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://www.python.org/)
+<div align="center">
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)]()
-![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)
-![Stars](https://img.shields.io/github/stars/Yigtwxx/CANomaly-LSTM)
-<br><br>
-<img width="500" height="656" alt="image" src="https://github.com/user-attachments/assets/ca972794-0f3c-4624-b53e-7d77cb0cbfbe" />
-
-<br>
-
-**Confusion Matrix — Threshold: 0.665126**  
-📄 Metrics summary can be found in `outputs/confusion_report.txt`
+[![Code Style](https://img.shields.io/badge/Code%20Style-Black-black)]()
 
 </div>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ca972794-0f3c-4624-b53e-7d77cb0cbfbe" alt="Confusion Matrix" width="600" />
+</p>
+
+---
+
+## 📋 Table of Contents
+- [Overview](#-overview)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Usage](#-usage)
+  - [1. Data Generation](#1-data-generation)
+  - [2. Model Training](#2-model-training)
+  - [3. Evaluation](#3-evaluation)
+- [Results](#-results)
+- [Contact](#-contact)
 
 ---
 
 ## ✨ Overview
 
-CANomaly-LSTM is a compact, end-to-end anomaly detection pipeline for **automotive CAN-Bus networks**.  
-It generates synthetic CAN traffic, injects realistic attack patterns, trains an LSTM Autoencoder on normal sequences, and detects anomalies using **reconstruction error + optimized thresholding**.
+**CANomaly-LSTM** is a specialized, end-to-end anomaly detection pipeline designed for **Controller Area Network (CAN)** security. As modern vehicles become increasingly connected, they face growing threats from cyberattacks. This project provides a robust solution using Deep Learning to identify malicious activities on the CAN bus.
 
-Bu proje; CAN güvenliği, zaman serisi analizi ve derin öğrenmeyi basit bir yapıda birleştirir.
+The system utilizes an **LSTM (Long Short-Term Memory) Autoencoder** architecture to learn the temporal patterns of normal CAN traffic. By analyzing reconstruction errors, it can effectively detect anomalies such as spoofing, replay attacks, and DoS attempts without requiring labeled attack data for training.
+
+### Key Capabilities
+- **Synthetic Traffic Generation**: Create realistic CAN data with customizable normal patterns and attack scenarios.
+- **Unsupervised Learning**: Trains only on normal data, making it capable of detecting zero-day attacks.
+- **Automated Thresholding**: Dynamically selects the optimal reconstruction error threshold to maximize F1-score.
 
 ---
 
 ## 💡 Features
 
-- Synthetic CAN dataset generation (timestamped frames, payload bytes, labels)  
-- 4 attack types:
-  - Spoofing  
-  - Replay  
-  - Unauthorized ID  
-  - Payload Corruption  
-- One-hot CAN ID encoding  
-- Payload (b0…b7) + Inter-Arrival Time (IAT)  
-- Sliding windows (size 50, stride 5)  
-- LSTM Autoencoder (Encoder → Latent → Decoder)  
-- Automatic threshold selection (best F1-score)  
-- Confusion matrix, classification report, and error CSV export
+### 🛡️ Comprehensive Attack Simulation
+The built-in generator supports 4 distinct attack types to test system robustness:
+- **Spoofing**: Injecting fake messages with legitimate IDs.
+- **Replay**: Re-transmitting valid captured messages to deceive ECUs.
+- **Unauthorized ID**: Broadcasting messages with IDs not defined in the system DBC.
+- **Payload Corruption**: Randomizing data bytes to simulate fuzzing or sensor malfunctions.
 
-## 🧪 Synthetic Data Generation
-
-A configurable synthetic CAN-Bus data generator is included to enable safe, repeatable experimentation without physical hardware.  
-The generator produces labeled CAN frames and common attack scenarios so the model can learn robust normal/attack patterns.
-
-### Key features
-- ✅ Normal traffic (multi-ECU simulation, configurable message schedules)  
-- ✅ ID spoofing (single or distributed spoofers)  
-- ✅ Payload fuzzing (byte-level randomization, bit-flip noise)  
-- ✅ DoS-style bursts (high-frequency message floods)  
-- ✅ Gear / RPM manipulation (continuous or step changes to simulate drivetrain spoofing)  
-- ✅ Fully reproducible via a random seed and configurable scenario parameters
-
-### Why use it
-- Create large, balanced datasets for training and evaluation without risking real vehicles.  
-- Reproduce specific attack scenarios for ablation studies and defense benchmarking.  
-- Control severity, frequency and overlap of attacks for robustness testing.
+### 🧠 Advanced Model Architecture
+- **Input Features**: One-hot encoded CAN IDs + Normalized Payload (8 bytes) + Inter-Arrival Time (IAT).
+- **Sliding Window**: Processes data in sequences (window size: 50, stride: 5) to capture temporal context.
+- **Autoencoder**: Compresses input into a latent representation and reconstructs it; high error indicates anomaly.
 
 ---
-```bash 
+
 ## 📁 Project Structure
+
+```bash
 CANomaly-LSTM/
-├── src/
-│   ├── generate_can_dataset.py      # Synthetic CAN data + attack injection
-│   ├── train_lstm_ae.py             # LSTM Autoencoder training pipeline
-│   └── plot_confusion.py            # Evaluation + confusion matrix generation
+├── data/                    # Data storage
+│   ├── can_data.csv         # Generated synthetic dataset
+│   └── recon_errors.csv     # Model outputs (errors & labels)
 │
-├── data/
-│   ├── can_data.csv                 # Generated CAN-Bus dataset
-│   └── recon_errors.csv             # Reconstruction errors + window labels
+├── outputs/                 # Results & Visualizations
+│   ├── confusion_matrix.png # Visual performance metric
+│   └── confusion_report.txt # Detailed classification metrics
 │
-├── outputs/
-│   ├── confusion_matrix.png         # Seaborn heatmap
-│   └── confusion_report.txt         # Precision/Recall/F1 metrics
+├── src/                     # Source Code
+│   ├── generate_can_dataset.py  # Data generation with attack injection
+│   ├── train_lstm_ae.py         # LSTM Autoencoder training loop
+│   └── plot_confusion.py        # Evaluation & plotting scripts
 │
-├── requirements.txt
+├── .gitignore
 ├── LICENSE
-└── README.md
-``` 
----
-
-## 🚀 How It Works (Short)
-
-1. **Dataset Generator**  
-   Creates 20k+ normal frames and injects 4 types of anomalies  
-   → stored in `data/can_data.csv`  
-   (script: `generate_can_dataset.py`)
-
-2. **Training (LSTM Autoencoder)**  
-   Model learns **normal-only** sequences  
-   → reconstruction error = anomaly score  
-   → results saved to `data/recon_errors.csv`  
-   (script: `train_lstm_ae.py`)
-
-3. **Evaluation**  
-   - Finds best F1 threshold automatically  
-   - Generates confusion matrix  
-   - Saves metrics report  
-   (script: `plot_confusion.py`)
+├── README.md
+├── requirements.txt         # Python dependencies
+└── SECURITY.md
+```
 
 ---
 
 ## 🛠️ Installation
 
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Yigtwxx/CANomaly-LSTM.git
+   cd CANomaly-LSTM
+   ```
+
+2. **Create a Virtual Environment (Optional but Recommended)**
+   ```bash
+   python -m venv .venv
+   # Windows:
+   .venv\Scripts\activate
+   # Linux/Mac:
+   source .venv/bin/activate
+   ```
+
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## 🚀 Usage
+
+Follow these steps to run the complete pipeline:
+
+### 1. Data Generation
+Generate a new synthetic dataset containing both normal traffic and injected attacks.
 ```bash
-pip install -r requirements.txt
-
-numpy==1.26.4
-pandas==2.2.2
-scikit-learn==1.5.1
-matplotlib==3.8.3
-seaborn==0.13.2
-torch==2.2.0
-
-✅ Usage
-1. Generate Dataset
 python src/generate_can_dataset.py
-
-2. Train the Autoencoder
-python src/train_lstm_ae.py
-
-3. Create Confusion Matrix & Report
-python src/plot_confusion.py
-
-Classification Report Summary
-(Generated automatically in outputs/confusion_report.txt)
-
-Accuracy: 0.9891
-Precision (Anomaly): 0.9552
-Recall (Anomaly): 0.6095
-F1-Score: 0.7442
-
 ```
-💬 Contact
+*Output: `data/can_data.csv`*
 
-📧 Email: yigiterdogan6@icloud.com
+### 2. Model Training
+Train the LSTM Autoencoder on the normal subset of the data.
+```bash
+python src/train_lstm_ae.py
+```
+*Output: Trained model (in memory) & Reconstruction errors saved to `data/recon_errors.csv`*
 
-🌐 GitHub: https://github.com/Yigtwxx
+### 3. Evaluation
+Calculate metrics, find the optimal threshold, and generate the confusion matrix.
+```bash
+python src/plot_confusion.py
+```
+*Output: `outputs/confusion_matrix.png` & `outputs/confusion_report.txt`*
 
+---
 
-🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
+## 📊 Results
 
-⭐ If you find this project useful, feel free to star the repository.
+The model achieves high performance in distinguishing between normal operation and various attack vectors.
+
+### Confusion Matrix
+![Confusion Matrix](https://github.com/user-attachments/assets/ca972794-0f3c-4624-b53e-7d77cb0cbfbe)
+
+### Performance Metrics
+| Metric | Score | Description |
+| :--- | :--- | :--- |
+| **Accuracy** | **98.91%** | Overall correctness of the model. |
+| **Precision** | **95.52%** | High reliability in anomaly alerts (low false positives). |
+| **Recall** | **60.95%** | Ability to detect the majority of attack instances. |
+| **F1-Score** | **0.7442** | Balanced harmonic mean of Precision and Recall. |
+
+*(Metrics based on the optimal threshold of 0.665126)*
+
+---
+
+## 💬 Contact
+
+**Yiğit Erdoğan**  
+- 📧 Email: [yigiterdogan6@icloud.com](mailto:yigiterdogan6@icloud.com)
+- 🌐 GitHub: [@Yigtwxx](https://github.com/Yigtwxx)
+
+<br>
+
+> **Note**: This project is for educational and research purposes. Always test security tools in controlled environments.
