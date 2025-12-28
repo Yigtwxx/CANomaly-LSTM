@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 
-# -------------------- PARAMETRELER --------------------
+# -------------------- PARAMETRELER -----------------
 OUT_CSV = "can_data.csv"     # Üretilecek dosya adı
 NUM_NORMAL = 20000           # Üretilecek normal mesaj sayısı
 NUM_SPIKE_EVENTS = 4         # Kaç ayrı saldırı BLOĞU yerleştirilecek
@@ -41,6 +41,7 @@ def random_payload():
     return b
 
 # Başlangıç zaman damgası – milisaniye cinsinden ilerleteceğiz.
+
 start = datetime.now()
 
 # Her mesaj arasındaki temel aralık ~5 ms. (sentetik)
