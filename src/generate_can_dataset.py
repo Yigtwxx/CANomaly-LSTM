@@ -9,7 +9,7 @@
 #   4) Corruption (payload bozulması)
 # Çıktı:
 # - can_data.csv  -> timestamp, can_id, dlc, b0..b7, label(0=normal,1=anomali)
-# --------------------------------------------------------------
+# ---------------------------------------------------------
 
 import csv, random, time
 import numpy as np
