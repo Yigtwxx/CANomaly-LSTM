@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 
-# -------------------- PARAMETRELER --------------------
+# -------------------- PARAMETRS--------------------
 OUT_CSV = "can_data.csv"     # Üretilecek dosya adı
 NUM_NORMAL = 20000           # Üretilecek normal mesaj sayısı
 NUM_SPIKE_EVENTS = 4         # Kaç ayrı saldırı BLOĞU yerleştirilecek
@@ -70,6 +70,7 @@ total = len(rows)
 insert_positions = sorted(random.sample(range(100, total-500), NUM_SPIKE_EVENTS))
 
 # ---- Saldırı türleri için yardımcı fonksiyonlar ----
+
 def insert_spoof(pos):
     """ Sahte mesaj: normal ID'lerle ama anormal payload paterni """
     for j in range(50):  # 50 anomali mesajı
@@ -126,6 +127,7 @@ def insert_corruption(pos):
         })
 
 # Seçilen pozisyonlara sırasıyla saldırı bloklarını uygula.
+
 for i, pos in enumerate(insert_positions):
     # Listeye insert ettikçe uzunluk arttığı için pozisyonu az kaydırıyoruz
     current_pos = min(len(rows)-200, pos + i*100)
