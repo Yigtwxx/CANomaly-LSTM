@@ -205,3 +205,39 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ==============================================================
+# 📌 CANomaly-LSTM Projesine Özel Kurallar
+# ==============================================================
+
+# Veri dosyaları (büyük boyutlu, yeniden üretilebilir)
+data/*.csv
+*.csv
+
+# Model çıktıları ve checkpoint'ler
+*.pt
+*.pth
+*.h5
+*.pkl
+*.pickle
+models/
+
+# Görselleştirme çıktıları (yeniden üretilebilir)
+outputs/
+*.png
+*.jpg
+*.jpeg
+
+# Raporlar (yeniden üretilebilir)
+confusion_report.txt
+regression_report.txt
+
+# Jupyter ve IDE
+*.ipynb
+.idea/
+.vscode/
+
+# OS dosyaları
+.DS_Store
+Thumbs.db
+desktop.ini
